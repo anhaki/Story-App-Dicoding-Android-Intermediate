@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="none">-</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="login">Masuk</string>
+    <string name="don_t_have_an_account">"Belum memiliki akun? "</string>
+    <string name="sign_up">Daftar</string>
+    <string name="logo_desc">logo utama</string>
+    <string name="detail_title">Detail Cerita</string>
+    <string name="add_story">tambah cerita</string>
+    <string name="name">Nama</string>
+    <string name="already_have_an_account">"Sudah memiliki akun? "</string>
+    <string name="add_using_camera">tambah menggunakan kamera</string>
+    <string name="add_from_gallery">tambah dari galeri</string>
+    <string name="description">Deskripsi</string>
+    <string name="upload">Unggah</string>
+    <string name="photo_to_upload">foto yang akan diunggah</string>
+    <string name="share_is_fun">Berbagi itu asik!</string>
+    <string name="post_online">Posting online!</string>
+    <string name="gain_happiness">Dapatkan kebahagiaan!</string>
+    <string name="share_is_fun_image">gambar berbagi menyenangkan</string>
+    <string name="post_online_image">gambar posting online</string>
+    <string name="gain_happiness_image">gambar dapatkan kebahagiaan</string>
+    <string name="exp_share">Bagikan ceritamu dengan semua orang di seluruh dunia, biarkan dunia melihat dan menghargai cerita dan momen yang kamu bagikan. Lanjut!</string>
+    <string name="exp_post">Dengan memposting ceritamu secara online, kamu dapat mencapai lebih banyak orang, menyimpan foto-foto kamu dengan aman, dan banyak lagi! Tunggu apa lagi? Gas!</string>
+    <string name="exp_happy">Saat kamu berbagi ceritamu kepada orang lain, kamu akan mendapatkan kebahagiaan tanpa batas! Jadikan dirimu bahagia setiap hari agar panjang umur!</string>
+    <string name="name_icon">ikon nama</string>
+    <string name="story_image">gambar cerita</string>
+    <string name="close">Tutup</string>
+    <string name="email_error">Format email tidak valid</string>
+    <string name="pass_error">Minimal 8 karakter</string>
+    <string name="deskerror">Tambahkan Deskripsi</string>
+    <string name="permis_granted">Permintaan izin disetujui</string>
+    <string name="permis_denied">Permintaan izin ditolak</string>
+    <string name="img_notfound">Gambar tidak ditemukan</string>
+    <string name="log_out">Keluar</string>
+    <string name="main_title">Halo, %1$s!</string>
+    <string name="upload_title">Unggah Ceritamu</string>
+    <string name="language">Bahasa</string>
+</resources>
+
+
+

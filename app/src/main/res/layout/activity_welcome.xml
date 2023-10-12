@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_welcome_scene"
+    tools:context=".ui.WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/main_logo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/male_and_female_employee_chatting_on_phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".35"
+        android:contentDescription="@string/share_is_fun_image"/>
+
+    <TextView
+        android:id="@+id/Ttlsambut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="@string/share_is_fun"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/main_logo"
+        app:layout_constraintStart_toStartOf="@id/main_logo"
+        app:layout_constraintTop_toBottomOf="@id/main_logo" />
+
+    <TextView
+        android:id="@+id/sambut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/exp_share"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/Ttlsambut"
+        app:layout_constraintStart_toStartOf="@id/Ttlsambut"
+        app:layout_constraintTop_toBottomOf="@id/Ttlsambut" />
+
+    <ImageView
+        android:id="@+id/main_logo2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/happy_business_woman"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".35"
+        android:contentDescription="@string/post_online_image"/>
+
+    <TextView
+        android:id="@+id/Ttlsambut2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/post_online"
+        android:layout_marginHorizontal="30dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/main_logo2"
+        app:layout_constraintStart_toStartOf="@id/main_logo2"
+        app:layout_constraintTop_toBottomOf="@id/main_logo2" />
+
+    <TextView
+        android:id="@+id/sambut2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/exp_post"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/Ttlsambut2"
+        app:layout_constraintStart_toStartOf="@id/Ttlsambut2"
+        app:layout_constraintTop_toBottomOf="@id/Ttlsambut2" />
+    <ImageView
+        android:id="@+id/main_logo3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/online_furniture_shopping"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".35"
+        android:contentDescription="@string/gain_happiness_image"/>
+
+    <TextView
+        android:id="@+id/Ttlsambut3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/gain_happiness"
+        android:layout_marginHorizontal="30dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/main_logo3"
+        app:layout_constraintStart_toStartOf="@id/main_logo3"
+        app:layout_constraintTop_toBottomOf="@id/main_logo3" />
+
+    <TextView
+        android:id="@+id/sambut3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/exp_happy"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/Ttlsambut3"
+        app:layout_constraintStart_toStartOf="@id/Ttlsambut3"
+        app:layout_constraintTop_toBottomOf="@id/Ttlsambut3" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/ind1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:altSrc="@drawable/yes_circle_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ind2"
+        app:layout_constraintHorizontal_bias=".75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".85"
+        app:srcCompat="@drawable/no_circle_24" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/ind2"
+        android:layout_width="15dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        app:altSrc="@drawable/yes_circle_24"
+        app:layout_constraintBottom_toBottomOf="@id/ind1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ind1"
+        app:srcCompat="@drawable/no_circle_24" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/ind3"
+        android:layout_width="15dp"
+        android:layout_height="0dp"
+        app:altSrc="@drawable/yes_circle_24"
+        app:layout_constraintBottom_toBottomOf="@id/ind1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".25"
+        app:layout_constraintStart_toEndOf="@id/ind2"
+        app:layout_constraintTop_toTopOf="@id/ind1"
+        app:srcCompat="@drawable/no_circle_24" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/btn_signUp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#f99932"/>
+
+    <Button
+        android:id="@+id/btn_signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        app:layout_constraintBottom_toBottomOf="@id/btn_login"
+        app:layout_constraintStart_toStartOf="@id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="#2d3e50"/>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

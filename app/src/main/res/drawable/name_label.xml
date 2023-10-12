@@ -1,0 +1,17 @@
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:shape="rectangle"
+    tools:ignore="MissingDefaultResource">
+
+    <solid
+        android:color= "@color/secCol" >
+    </solid>
+
+    <corners
+        android:topLeftRadius="0dp"
+        android:bottomLeftRadius="0dp"
+        android:topRightRadius="15dp">
+    </corners>
+
+</shape>

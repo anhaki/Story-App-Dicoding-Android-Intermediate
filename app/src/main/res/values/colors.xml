@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="mainCol">#2d3e50</color>
+    <color name="mainCol2">#58738F</color>
+    <color name="secCol">#f99932</color>
+</resources>
