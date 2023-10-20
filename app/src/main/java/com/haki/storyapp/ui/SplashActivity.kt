@@ -21,8 +21,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val splashTime = 3000L
-
         Handler(Looper.getMainLooper()).postDelayed({
 
             var intent = Intent(this, MainActivity::class.java)
@@ -34,7 +32,11 @@ class SplashActivity : AppCompatActivity() {
 
             startActivity(intent)
             finish()
-        }, splashTime)
+        }, SPLASH_TIME)
 
+    }
+
+    companion object{
+        const val SPLASH_TIME = 3000L
     }
 }

@@ -4,12 +4,12 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.ui.viewModel.ViewModelFactory
 import com.haki.storyapp.customView.MyButton
@@ -48,33 +48,20 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
         myPwEditText = binding.etPass
         myButton = binding.btnSign
 
-        myEmailEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //Do Nothing
-            }
+        myEmailEditText.doOnTextChanged { _, _, _, _ ->
+            setMyButton(true)
+        }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setMyButton(true)
-            }
+        myPwEditText.doOnTextChanged { _, _, _, _ ->
+            setMyButton(true)
+        }
 
-            override fun afterTextChanged(s: Editable?) {
-                //Do Nothing
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@SignupActivity, WelcomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
             }
-
-        })
-        myPwEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //Do Nothing
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setMyButton(true)
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //Do Nothing
-            }
-
         })
     }
 
@@ -153,12 +140,4 @@ class SignupActivity : AppCompatActivity(), View.OnClickListener {
             myButton.text = getString(R.string.sign_up)
         }
     }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this@SignupActivity, WelcomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-    }
-
 }

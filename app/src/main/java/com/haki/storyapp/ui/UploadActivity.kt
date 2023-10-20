@@ -6,8 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -15,6 +13,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
 import com.haki.storyapp.customView.MyButton
@@ -68,20 +67,9 @@ class UploadActivity : AppCompatActivity() {
         myButton = binding.btnUpload
         myDeskEditText = binding.etDesk
 
-        myDeskEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //Do Nothing
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setMyButton(true)
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //Do Nothing
-            }
-
-        })
+        myDeskEditText.doOnTextChanged { _, _, _, _ ->
+            setMyButton(true)
+        }
 
         binding.btnCam.setOnClickListener { startCamera() }
         binding.btnGal.setOnClickListener { startGallery() }

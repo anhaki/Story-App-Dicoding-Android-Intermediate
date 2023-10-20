@@ -3,6 +3,7 @@ package com.haki.storyapp.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.haki.storyapp.ui.DetailActivity
@@ -29,9 +30,7 @@ class StoryAdapter(private val listStories: List<ListStoryItem>) :
     class ListViewHolder(private val binding: StoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(storiesList: ListStoryItem) {
-            Glide.with(binding.root.context)
-                .load(storiesList.photoUrl)
-                .into(binding.ivFoto)
+            binding.ivFoto.loadImage(storiesList.photoUrl)
             binding.tvName.text = storiesList.name
 
             itemView.setOnClickListener {
@@ -42,6 +41,12 @@ class StoryAdapter(private val listStories: List<ListStoryItem>) :
             }
         }
 
+        private fun ImageView.loadImage(url: String) {
+            Glide.with(this.context)
+                .load(url)
+                .centerCrop()
+                .into(this)
+        }
     }
 
 

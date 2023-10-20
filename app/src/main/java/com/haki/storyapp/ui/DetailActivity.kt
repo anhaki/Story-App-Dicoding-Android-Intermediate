@@ -2,8 +2,8 @@ package com.haki.storyapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
@@ -62,10 +62,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoad: Boolean) {
-        binding.progress.visibility = if (isLoad) View.VISIBLE else View.GONE
-        binding.cardFoto.visibility = if (isLoad) View.INVISIBLE else View.VISIBLE
-        binding.llPertama.visibility = if (isLoad) View.INVISIBLE else View.VISIBLE
-        binding.tvDesk.visibility = if (isLoad) View.INVISIBLE else View.VISIBLE
+        binding.progress.isVisible = isLoad
+        binding.cardFoto.isVisible = !isLoad
+        binding.llPertama.isVisible = !isLoad
+        binding.tvDesk.isVisible = !isLoad
     }
 
     private fun showSnackBar(msg: String) {

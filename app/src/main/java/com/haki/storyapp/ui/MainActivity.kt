@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         showStories()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finishAffinity()
+            }
+        })
+
     }
 
     override fun onResume() {
@@ -107,10 +115,5 @@ class MainActivity : AppCompatActivity() {
             binding.progress.visibility = View.GONE
             binding.rvStory.visibility = View.VISIBLE
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
     }
 }
