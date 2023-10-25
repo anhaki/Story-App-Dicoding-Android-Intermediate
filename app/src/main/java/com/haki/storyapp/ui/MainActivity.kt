@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
+import com.haki.storyapp.adapter.QuoteListAdapter
 import com.haki.storyapp.ui.viewModel.MainViewModel
 import com.haki.storyapp.ui.viewModel.ViewModelFactory
-import com.haki.storyapp.adapter.StoryAdapter
 import com.haki.storyapp.databinding.ActivityMainBinding
 import com.haki.storyapp.repo.ResultState
 
@@ -53,39 +53,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.stories()
-    }
-
     private fun showStories() {
-
-        viewModel.stories().observe(this) { result ->
-            if (result != null) {
-
-                when (result) {
-                    is ResultState.Loading -> {
-                        showLoading(true)
-                    }
-
-                    is ResultState.Success -> {
-                        showLoading(false)
-                        val adapter = StoryAdapter(result.data.listStory)
-                        binding.rvStory.adapter = adapter
-                    }
-
-                    is ResultState.Error -> {
-                        viewModel.getSession().observe(this) { user ->
-                            showSnackBar(user.token)
-                        }
-
-                        binding.topAppBar.title
-                        showLoading(false)
-                        showSnackBar(result.error)
-                    }
-                }
-            }
+        val adapter = QuoteListAdapter()
+        binding.rvStory.adapter = adapter
+        viewModel.story.observe(this) {
+            adapter.submitData(lifecycle, it)
         }
+
     }
 
     private fun showSnackBar(msg: String) {

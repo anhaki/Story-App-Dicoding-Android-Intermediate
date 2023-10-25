@@ -62,6 +62,5 @@ dependencies {
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
-    implementation ("androidx.room:room-paging:2.5.2")
-
+    implementation ("androidx.room:room-paging:2.6.0")
 }

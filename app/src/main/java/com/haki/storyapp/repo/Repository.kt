@@ -1,11 +1,18 @@
 package com.haki.storyapp.repo
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.google.gson.Gson
 import com.haki.storyapp.apiService.ApiService
+import com.haki.storyapp.data.QuotePagingSource
 import com.haki.storyapp.pref.UserModel
 import com.haki.storyapp.pref.UserPreference
 import com.haki.storyapp.response.DetailResponse
+import com.haki.storyapp.response.ListStoryItem
 import com.haki.storyapp.response.LoginResponse
 import com.haki.storyapp.response.SignUpResponse
 import com.haki.storyapp.response.StoriesResponse
@@ -49,17 +56,29 @@ class Repository private constructor(
         }
     }
 
-    fun stories() = liveData {
-        emit(ResultState.Loading)
-        try {
-            val successResponse = apiService.getStories()
-            emit(ResultState.Success(successResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, StoriesResponse::class.java)
-            emit(ResultState.Error(errorResponse.message))
-        }
+//    fun stories() = liveData {
+//        emit(ResultState.Loading)
+//        try {
+//            val successResponse = apiService.getStories()
+//            emit(ResultState.Success(successResponse))
+//        } catch (e: HttpException) {
+//            val errorBody = e.response()?.errorBody()?.string()
+//            val errorResponse = Gson().fromJson(errorBody, StoriesResponse::class.java)
+//            emit(ResultState.Error(errorResponse.message))
+//        }
+//    }
+
+    fun getStory(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                QuotePagingSource(apiService)
+            }
+        ).liveData
     }
+
 
     fun detail(id: String) = liveData {
         emit(ResultState.Loading)
