@@ -2,20 +2,21 @@ package com.haki.storyapp.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.google.gson.Gson
 import com.haki.storyapp.apiService.ApiService
-import com.haki.storyapp.data.QuotePagingSource
+import com.haki.storyapp.data.StoryRemoteMediator
+import com.haki.storyapp.database.StoryDatabase
 import com.haki.storyapp.pref.UserModel
 import com.haki.storyapp.pref.UserPreference
 import com.haki.storyapp.response.DetailResponse
 import com.haki.storyapp.response.ListStoryItem
 import com.haki.storyapp.response.LoginResponse
 import com.haki.storyapp.response.SignUpResponse
-import com.haki.storyapp.response.StoriesResponse
 import com.haki.storyapp.response.UploadResponse
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -27,7 +28,8 @@ import java.io.File
 
 class Repository private constructor(
     private val apiService: ApiService,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
+    private val storyDatabase: StoryDatabase
 ) {
     fun login(email: String, password: String) = liveData {
         emit(ResultState.Loading)
@@ -68,13 +70,16 @@ class Repository private constructor(
 //        }
 //    }
 
+    @OptIn(ExperimentalPagingApi::class)
     fun getStory(): LiveData<PagingData<ListStoryItem>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
             pagingSourceFactory = {
-                QuotePagingSource(apiService)
+//                QuotePagingSource(apiService)
+                storyDatabase.storyDao().getAllStory()
             }
         ).liveData
     }
@@ -92,9 +97,11 @@ class Repository private constructor(
         }
     }
 
-    fun upload(imageFile: File, description: String) = liveData {
+    fun upload(imageFile: File, description: String, latitude: Double?, longitude: Double?) = liveData {
         emit(ResultState.Loading)
         val requestBody = description.toRequestBody("text/plain".toMediaType())
+        val lat = latitude?.toFloat()
+        val long = longitude?.toFloat()
         val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
         val multipartBody = MultipartBody.Part.createFormData(
             "photo",
@@ -102,7 +109,11 @@ class Repository private constructor(
             requestImageFile
         )
         try {
-            val successResponse = apiService.uploadStr(multipartBody, requestBody)
+            val successResponse = if (lat == null && long == null){
+                apiService.uploadStr(multipartBody, requestBody)
+            } else {
+                apiService.uploadStr(multipartBody, requestBody, lat, long)
+            }
             emit(ResultState.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
@@ -130,11 +141,12 @@ class Repository private constructor(
         fun getInstance(
             apiService: ApiService,
             userPreference: UserPreference,
+            storyDatabase: StoryDatabase,
             isNeeded: Boolean
         ): Repository? {
             if (isNeeded) {
                 synchronized(this) {
-                    instance = Repository(apiService, userPreference)
+                    instance = Repository(apiService, userPreference, storyDatabase)
                 }
             }
             return instance

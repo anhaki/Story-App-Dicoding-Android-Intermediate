@@ -3,6 +3,7 @@ package com.haki.storyapp.ui
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
 import com.haki.storyapp.customView.MyButton
@@ -33,6 +36,8 @@ class UploadActivity : AppCompatActivity() {
 
     private lateinit var myButton: MyButton
     private lateinit var myDeskEditText: MyDeskEditText
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var currentLoc: Location
 
     private val viewModel by viewModels<UploadViewModel> {
         ViewModelFactory.getInstance(this, true)
@@ -48,6 +53,32 @@ class UploadActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.permis_denied), Toast.LENGTH_LONG).show()
             }
         }
+
+    private val requestPermissionLauncher2 =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    // Precise location access granted.
+                    getMyLastLocation()
+                }
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    // Only approximate location access granted.
+                    getMyLastLocation()
+                }
+                else -> {
+                    // No location access granted.
+                }
+            }
+        }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
 
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(
@@ -75,6 +106,9 @@ class UploadActivity : AppCompatActivity() {
         binding.btnGal.setOnClickListener { startGallery() }
         binding.btnUpload.setOnClickListener { uploadImg() }
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        getMyLastLocation()
     }
 
     private fun startGallery() {
@@ -118,7 +152,15 @@ class UploadActivity : AppCompatActivity() {
             Log.d("the File", "imagepath: ${imgFile.path}")
             val description = binding.etDesk.text.toString()
 
-            viewModel.upload(imgFile, description).observe(this) { result ->
+            var latitude: Double? = null
+            var longitude: Double? = null
+
+            if (binding.cbLoc.isChecked) {
+                latitude = currentLoc.latitude
+                longitude = currentLoc.longitude
+            }
+
+            viewModel.upload(imgFile, description, latitude, longitude).observe(this) { result ->
                 if (result != null) {
                     when (result) {
                         is ResultState.Loading -> {
@@ -148,6 +190,23 @@ class UploadActivity : AppCompatActivity() {
 
     }
 
+    private fun getMyLastLocation() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ){
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    currentLoc = location
+                }
+            }
+        } else {
+            requestPermissionLauncher2.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
     private fun showSnackBar(msg: String) {
         Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.close)) { }

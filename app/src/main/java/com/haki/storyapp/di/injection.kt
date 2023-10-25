@@ -2,6 +2,7 @@ package com.haki.storyapp.di
 
 import android.content.Context
 import com.haki.storyapp.apiService.ApiConfig
+import com.haki.storyapp.database.StoryDatabase
 import com.haki.storyapp.pref.UserPreference
 import com.haki.storyapp.pref.dataStore
 import com.haki.storyapp.repo.Repository
@@ -14,8 +15,9 @@ object Injection {
         val token = runBlocking {
             pref.getSession().first().token
         }
+        val database = StoryDatabase.getDatabase(context)
         val apiService = ApiConfig.getApiService(token)
-        return Repository.getInstance(apiService, pref, true)
+        return Repository.getInstance(apiService, pref, database, true)
     }
 
 }

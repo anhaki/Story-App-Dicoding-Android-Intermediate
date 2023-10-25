@@ -92,17 +92,25 @@
                 android:background="@drawable/img_btn_bg_2"
                 android:contentDescription="@string/add_from_gallery"/>
 
+            <CheckBox
+                android:id="@+id/cb_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/card_foto"
+                app:layout_constraintTop_toBottomOf="@id/card_foto"
+                android:text="Include currect location"
+                android:textSize="16sp"/>
+
             <com.haki.storyapp.customView.MyDeskEditText
                 android:id="@+id/et_desk"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/card_foto"
+                app:layout_constraintStart_toStartOf="@id/cb_loc"
                 app:layout_constraintEnd_toEndOf="@id/card_foto"
-                app:layout_constraintTop_toBottomOf="@id/card_foto"
+                app:layout_constraintTop_toBottomOf="@id/cb_loc"
                 android:background="@drawable/et_corner"
                 android:hint="@string/description"
                 android:padding="15dp"
-                android:layout_marginTop="25dp"
                 android:inputType="textMultiLine"/>
 
             <com.haki.storyapp.customView.MyButton

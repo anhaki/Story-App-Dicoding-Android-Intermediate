@@ -7,11 +7,13 @@ import androidx.room.RoomDatabase
 import com.haki.storyapp.response.ListStoryItem
 
 @Database(
-    entities = [ListStoryItem::class],
-    version = 1,
+    entities = [ListStoryItem::class, RemoteKeys::class],
+    version = 2,
     exportSchema = false
 )
 abstract class StoryDatabase : RoomDatabase() {
+    abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
         @Volatile

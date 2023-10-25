@@ -1,7 +1,9 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    }
+    id ("kotlin-kapt")
+    id ("kotlin-parcelize")
+}
 
 android {
     namespace = "com.haki.storyapp"
@@ -63,4 +65,11 @@ dependencies {
 
     implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation ("androidx.room:room-paging:2.6.0")
+
+    implementation ("androidx.room:room-ktx:2.6.0")
+    kapt ("androidx.room:room-compiler:2.6.0")
+
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
 }
