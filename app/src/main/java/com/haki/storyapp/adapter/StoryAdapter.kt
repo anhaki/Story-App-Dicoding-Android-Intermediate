@@ -13,8 +13,8 @@ import com.haki.storyapp.databinding.StoryItemBinding
 import com.haki.storyapp.response.ListStoryItem
 import com.haki.storyapp.response.StoriesResponse
 
-class QuoteListAdapter :
-    PagingDataAdapter<ListStoryItem, QuoteListAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter :
+    PagingDataAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = StoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,8 +28,7 @@ class QuoteListAdapter :
         }
     }
 
-    class ListViewHolder(private val binding: StoryItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: StoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(storiesList: ListStoryItem) {
             binding.ivFoto.loadImage(storiesList.photoUrl)
             binding.tvName.text = storiesList.name

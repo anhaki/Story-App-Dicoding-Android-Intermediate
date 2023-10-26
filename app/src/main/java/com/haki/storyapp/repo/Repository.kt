@@ -17,6 +17,7 @@ import com.haki.storyapp.response.DetailResponse
 import com.haki.storyapp.response.ListStoryItem
 import com.haki.storyapp.response.LoginResponse
 import com.haki.storyapp.response.SignUpResponse
+import com.haki.storyapp.response.StoriesResponse
 import com.haki.storyapp.response.UploadResponse
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -58,17 +59,17 @@ class Repository private constructor(
         }
     }
 
-//    fun stories() = liveData {
-//        emit(ResultState.Loading)
-//        try {
-//            val successResponse = apiService.getStories()
-//            emit(ResultState.Success(successResponse))
-//        } catch (e: HttpException) {
-//            val errorBody = e.response()?.errorBody()?.string()
-//            val errorResponse = Gson().fromJson(errorBody, StoriesResponse::class.java)
-//            emit(ResultState.Error(errorResponse.message))
-//        }
-//    }
+    fun stories() = liveData {
+        emit(ResultState.Loading)
+        try {
+            val successResponse = apiService.getStories(1, 100, 1)
+            emit(ResultState.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, StoriesResponse::class.java)
+            emit(ResultState.Error(errorResponse.message))
+        }
+    }
 
     @OptIn(ExperimentalPagingApi::class)
     fun getStory(): LiveData<PagingData<ListStoryItem>> {
@@ -83,7 +84,6 @@ class Repository private constructor(
             }
         ).liveData
     }
-
 
     fun detail(id: String) = liveData {
         emit(ResultState.Loading)

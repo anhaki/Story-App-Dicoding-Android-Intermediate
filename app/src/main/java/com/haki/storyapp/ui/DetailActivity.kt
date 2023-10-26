@@ -1,16 +1,16 @@
 package com.haki.storyapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
-import com.haki.storyapp.ui.viewModel.DetailViewModel
-import com.haki.storyapp.ui.viewModel.ViewModelFactory
 import com.haki.storyapp.databinding.ActivityDetailBinding
 import com.haki.storyapp.repo.ResultState
+import com.haki.storyapp.ui.viewModel.DetailViewModel
+import com.haki.storyapp.ui.viewModel.ViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
 
@@ -30,7 +30,13 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+
         showDetail()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 
     private fun showDetail() {

@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
-import com.haki.storyapp.adapter.QuoteListAdapter
+import com.haki.storyapp.adapter.LoadingStateAdapter
+import com.haki.storyapp.adapter.StoryAdapter
 import com.haki.storyapp.ui.viewModel.MainViewModel
 import com.haki.storyapp.ui.viewModel.ViewModelFactory
 import com.haki.storyapp.databinding.ActivityMainBinding
@@ -54,8 +55,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showStories() {
-        val adapter = QuoteListAdapter()
-        binding.rvStory.adapter = adapter
+        val adapter = StoryAdapter()
+        binding.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
+
         viewModel.story.observe(this) {
             adapter.submitData(lifecycle, it)
         }
@@ -79,6 +85,11 @@ class MainActivity : AppCompatActivity() {
 
     fun language(menuItem: MenuItem) {
         startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+    }
+
+    fun maps(menuItem: MenuItem) {
+        val intent = Intent(this@MainActivity, MapsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showLoading(isLoad: Boolean) {

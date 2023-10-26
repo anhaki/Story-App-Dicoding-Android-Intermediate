@@ -38,4 +38,7 @@
     <string name="main_title">Hello, %1$s!</string>
     <string name="upload_title">Upload Your Story</string>
     <string name="language">Language</string>
+    <string name="maps">Maps</string>
+    <string name="retry">Try again</string>
+    <string name="title_activity_maps">Story around the world</string>
 </resources>

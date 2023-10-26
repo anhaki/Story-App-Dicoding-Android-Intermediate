@@ -36,6 +36,10 @@ class ViewModelFactory(private val repository: Repository) :
                 UploadViewModel(repository) as T
             }
 
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(repository) as T
+            }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

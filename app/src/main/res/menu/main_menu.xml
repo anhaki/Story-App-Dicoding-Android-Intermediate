@@ -16,5 +16,12 @@
             app:showAsAction="ifRoom"
             android:onClick="language"
             />
+        <item
+            android:id="@+id/menuu3"
+            android:icon="@drawable/baseline_share_location_24"
+            android:title="@string/language"
+            app:showAsAction="ifRoom"
+            android:onClick="maps"
+            />
     </group>
 </menu>
