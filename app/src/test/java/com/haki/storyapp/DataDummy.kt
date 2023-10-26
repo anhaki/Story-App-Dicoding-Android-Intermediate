@@ -5,7 +5,7 @@ import com.haki.storyapp.response.ListStoryItem
 object DataDummy {
     fun generateDummyStoryResponse(): List<ListStoryItem> {
         val items: MutableList<ListStoryItem> = arrayListOf()
-        for (i in 0..10) {
+        for (i in 0..100) {
             val story = ListStoryItem(
                 "photoUri + $i",
                 "createdAt + $i",
