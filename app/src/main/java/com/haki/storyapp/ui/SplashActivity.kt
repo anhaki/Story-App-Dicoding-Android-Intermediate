@@ -23,10 +23,10 @@ class SplashActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-            var intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, WelcomeActivity::class.java)
             viewModel.getSession().observe(this) { user ->
-                if (!user.isLogin) {
-                    intent = Intent(this, WelcomeActivity::class.java)
+                if (user.isLogin) {
+                    intent = Intent(this, MainActivity::class.java)
                 }
             }
 

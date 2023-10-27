@@ -48,6 +48,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -84,4 +85,5 @@ dependencies {
     androidTestImplementation ("androidx.arch.core:core-testing:2.2.0") //InstantTaskExecutorRule
     androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3") //TestDispatcher
 
+    androidTestImplementation ("androidx.test.espresso:espresso-intents:3.5.1")//IntentsTestRule
 }

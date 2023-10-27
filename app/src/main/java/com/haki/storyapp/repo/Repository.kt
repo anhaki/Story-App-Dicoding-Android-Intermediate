@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.haki.storyapp.apiService.ApiService
 import com.haki.storyapp.data.StoryRemoteMediator
 import com.haki.storyapp.database.StoryDatabase
+import com.haki.storyapp.di.wrapEspressoIdlingResource
 import com.haki.storyapp.pref.UserModel
 import com.haki.storyapp.pref.UserPreference
 import com.haki.storyapp.response.DetailResponse
@@ -34,16 +35,18 @@ class Repository private constructor(
 ) {
     fun login(email: String, password: String) = liveData {
         emit(ResultState.Loading)
-        try {
-            val successResponse = apiService.login(email, password)
-            val userModel =
-                UserModel(successResponse.loginResult.name, successResponse.loginResult.token, true)
-            saveSession(userModel)
-            emit(ResultState.Success(successResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
-            emit(ResultState.Error(errorResponse.message))
+        wrapEspressoIdlingResource{
+            try {
+                val successResponse = apiService.login(email, password)
+                val userModel =
+                    UserModel(successResponse.loginResult.name, successResponse.loginResult.token, true)
+                saveSession(userModel)
+                emit(ResultState.Success(successResponse))
+            } catch (e: HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
+                emit(ResultState.Error(errorResponse.message))
+            }
         }
     }
 

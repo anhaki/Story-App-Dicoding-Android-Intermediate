@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:menuCategory="container">
         <item
-            android:id="@+id/menuuu"
+            android:id="@+id/logout_menu"
             android:icon="@drawable/baseline_power_settings_new_24"
             android:title="@string/log_out"
             app:showAsAction="never"
             android:onClick="logOut"
             />
         <item
-            android:id="@+id/menuuu2"
+            android:id="@+id/language_menu"
             android:icon="@drawable/baseline_translate_24"
             android:title="@string/language"
             app:showAsAction="ifRoom"
             android:onClick="language"
             />
         <item
-            android:id="@+id/menuu3"
+            android:id="@+id/maps_menu"
             android:icon="@drawable/baseline_share_location_24"
             android:title="@string/language"
             app:showAsAction="ifRoom"
