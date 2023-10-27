@@ -8,6 +8,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
@@ -38,8 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.DetailActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.SignupActivity"
             android:exported="false" />

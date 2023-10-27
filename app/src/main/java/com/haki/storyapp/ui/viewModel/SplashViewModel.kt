@@ -8,6 +8,6 @@ import com.haki.storyapp.repo.Repository
 
 class SplashViewModel(private val repository: Repository) : ViewModel() {
     fun getSession(): LiveData<UserModel> {
-        return repository.getSession().asLiveData()
+        return repository.getUserSession().asLiveData()
     }
 }

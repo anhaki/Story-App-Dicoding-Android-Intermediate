@@ -25,6 +25,7 @@ import com.haki.storyapp.databinding.ActivityUploadBinding
 import com.haki.storyapp.di.getImageUri
 import com.haki.storyapp.di.reduceFileImage
 import com.haki.storyapp.di.uriToFile
+import com.haki.storyapp.pref.LocModel
 import com.haki.storyapp.repo.ResultState
 import com.haki.storyapp.ui.viewModel.UploadViewModel
 import com.haki.storyapp.ui.viewModel.ViewModelFactory
@@ -37,7 +38,6 @@ class UploadActivity : AppCompatActivity() {
     private lateinit var myButton: MyButton
     private lateinit var myDeskEditText: MyDeskEditText
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var currentLoc: Location
 
     private val viewModel by viewModels<UploadViewModel> {
         ViewModelFactory.getInstance(this, true)
@@ -49,8 +49,10 @@ class UploadActivity : AppCompatActivity() {
         ) { isGranted: Boolean ->
             if (isGranted) {
                 Toast.makeText(this, getString(R.string.permis_granted), Toast.LENGTH_LONG).show()
+                getMyLastLocation()
             } else {
                 Toast.makeText(this, getString(R.string.permis_denied), Toast.LENGTH_LONG).show()
+                getMyLastLocation()
             }
         }
 
@@ -60,13 +62,13 @@ class UploadActivity : AppCompatActivity() {
         ) { permissions ->
             when {
                 permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
-                    // Precise location access granted.
                     getMyLastLocation()
                 }
+
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
-                    // Only approximate location access granted.
                     getMyLastLocation()
                 }
+
                 else -> {
                     // No location access granted.
                 }
@@ -108,7 +110,6 @@ class UploadActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        getMyLastLocation()
     }
 
     private fun startGallery() {
@@ -156,8 +157,10 @@ class UploadActivity : AppCompatActivity() {
             var longitude: Double? = null
 
             if (binding.cbLoc.isChecked) {
-                latitude = currentLoc.latitude
-                longitude = currentLoc.longitude
+                viewModel.getLocSession().observe(this) { location ->
+                    latitude = location.lat
+                    longitude = location.lng
+                }
             }
 
             viewModel.upload(imgFile, description, latitude, longitude).observe(this) { result ->
@@ -179,7 +182,7 @@ class UploadActivity : AppCompatActivity() {
                         }
 
                         is ResultState.Error -> {
-                            showToast(result.error)
+                            showSnackBar(result.error)
                             setMyButton(true)
                             showLoading(false)
                         }
@@ -192,10 +195,10 @@ class UploadActivity : AppCompatActivity() {
 
     private fun getMyLastLocation() {
         if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-        ){
+        ) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null) {
-                    currentLoc = location
+                    viewModel.saveLocSession(LocModel(location.latitude, location.longitude))
                 }
             }
         } else {
@@ -207,6 +210,7 @@ class UploadActivity : AppCompatActivity() {
             )
         }
     }
+
     private fun showSnackBar(msg: String) {
         Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
             .setAction(getString(R.string.close)) { }

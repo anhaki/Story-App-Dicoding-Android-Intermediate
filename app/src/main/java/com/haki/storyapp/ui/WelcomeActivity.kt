@@ -23,11 +23,12 @@ class WelcomeActivity : AppCompatActivity(), OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        when(view){
+        when (view) {
             binding.btnLogin -> {
                 val intent = Intent(this@WelcomeActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
+
             binding.btnSignUp -> {
                 val intent = Intent(this@WelcomeActivity, SignupActivity::class.java)
                 startActivity(intent)

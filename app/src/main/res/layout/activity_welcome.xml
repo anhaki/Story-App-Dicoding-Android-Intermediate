@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/motionLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_welcome_scene"
@@ -14,21 +14,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:contentDescription="@string/share_is_fun_image"
         android:scaleType="fitCenter"
         android:src="@drawable/male_and_female_employee_chatting_on_phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".35"
-        android:contentDescription="@string/share_is_fun_image"/>
+        app:layout_constraintVertical_bias=".35" />
 
     <TextView
         android:id="@+id/Ttlsambut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="15dp"
         android:text="@string/share_is_fun"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -52,21 +52,21 @@
         android:id="@+id/main_logo2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/post_online_image"
         android:scaleType="fitCenter"
         android:src="@drawable/happy_business_woman"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".35"
-        android:contentDescription="@string/post_online_image"/>
+        app:layout_constraintVertical_bias=".35" />
 
     <TextView
         android:id="@+id/Ttlsambut2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="15dp"
         android:text="@string/post_online"
-        android:layout_marginHorizontal="30dp"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -84,25 +84,26 @@
         app:layout_constraintEnd_toEndOf="@id/Ttlsambut2"
         app:layout_constraintStart_toStartOf="@id/Ttlsambut2"
         app:layout_constraintTop_toBottomOf="@id/Ttlsambut2" />
+
     <ImageView
         android:id="@+id/main_logo3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/gain_happiness_image"
         android:scaleType="fitCenter"
         android:src="@drawable/online_furniture_shopping"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".35"
-        android:contentDescription="@string/gain_happiness_image"/>
+        app:layout_constraintVertical_bias=".35" />
 
     <TextView
         android:id="@+id/Ttlsambut3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="15dp"
         android:text="@string/gain_happiness"
-        android:layout_marginHorizontal="30dp"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -162,21 +163,21 @@
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/btn_signUp"
         android:layout_marginBottom="25dp"
-        android:backgroundTint="#f99932"/>
+        android:backgroundTint="#f99932"
+        android:text="@string/login"
+        app:layout_constraintEnd_toStartOf="@id/btn_signUp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <Button
         android:id="@+id/btn_signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#2d3e50"
         android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="@id/btn_login"
-        app:layout_constraintStart_toStartOf="@id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#2d3e50"/>
+        app:layout_constraintStart_toEndOf="@id/btn_login" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

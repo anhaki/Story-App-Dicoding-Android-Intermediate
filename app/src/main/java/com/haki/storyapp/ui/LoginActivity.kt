@@ -94,7 +94,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                     }
 
                     is ResultState.Success -> {
-                        viewModel.saveSession(
+                        viewModel.saveUserSession(
                             UserModel(
                                 result.data.loginResult.name,
                                 result.data.loginResult.token

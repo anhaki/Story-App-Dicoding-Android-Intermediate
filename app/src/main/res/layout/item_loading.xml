@@ -22,14 +22,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="@color/secCol" />
+        android:indeterminateTint="@color/secCol"
+        android:indeterminateTintMode="src_atop" />
 
     <Button
         android:id="@+id/retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/retry"
-        android:backgroundTint="@color/secCol"/>
+        android:backgroundTint="@color/secCol"
+        android:text="@string/retry" />
 </LinearLayout>

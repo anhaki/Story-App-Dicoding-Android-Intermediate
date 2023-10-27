@@ -14,7 +14,7 @@ object DataDummy {
                 i.toDouble(),
                 "id $i",
                 i.toDouble(),
-                )
+            )
             items.add(story)
         }
         return items

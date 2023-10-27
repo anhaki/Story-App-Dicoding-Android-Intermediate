@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.haki.storyapp.ui.DetailActivity
 import com.haki.storyapp.databinding.StoryItemBinding
 import com.haki.storyapp.response.ListStoryItem
-import com.haki.storyapp.response.StoriesResponse
 
 class StoryAdapter :
     PagingDataAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
@@ -28,7 +27,8 @@ class StoryAdapter :
         }
     }
 
-    class ListViewHolder(private val binding: StoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ListViewHolder(private val binding: StoryItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(storiesList: ListStoryItem) {
             binding.ivFoto.loadImage(storiesList.photoUrl)
             binding.tvName.text = storiesList.name
@@ -50,12 +50,15 @@ class StoryAdapter :
     }
 
     companion object {
-         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
             override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
         }

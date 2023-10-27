@@ -46,50 +46,49 @@ class SplashActivityTest {
     @Test
     fun fromSplashUntilLogin() {
 
-        // Wait for 3 seconds (or your specified SPLASH_TIME) for Splash screen to finish
-//        onView(withId(R.id.)).check(matches(isDisplayed()))
+        //wait for splashscreen to finish
         Thread.sleep(SplashActivity.SPLASH_TIME)
 
+        //check if already in WelcomeActivity
         Intents.intended(hasComponent(WelcomeActivity::class.java.name))
 
+        //swipe in welcomeActivity
         onView(withId(R.id.motionLayout)).perform(swipeLeft(), swipeLeft())
 
+        //check if login button is displayed
         onView(withId(R.id.btn_login)).check(matches(isDisplayed()))
+
+        //click login button (WelcomeActivity)
         onView(withId(R.id.btn_login)).perform(click())
 
+        //check if already in LoginActivity
         Intents.intended(hasComponent(LoginActivity::class.java.name))
 
+        //fill the form
         onView(withId(R.id.et_email)).perform(typeText(dummyEmail), closeSoftKeyboard())
         onView(withId(R.id.et_pass)).perform(typeText(dummyPass), closeSoftKeyboard())
 
+        //click login button (LoginActivity)
         onView(withId(R.id.btn_login)).perform(click())
 
+        //check if already in MainActivity
         Intents.intended(hasComponent(MainActivity::class.java.name))
+
+        //check if recyclerview is displayed
         onView(withId(R.id.rv_story)).check(matches(isDisplayed()))
     }
 
+
     @Test
-    fun uploadImageTest() {
+    fun fromMainUntilLogout() {
         Thread.sleep(SplashActivity.SPLASH_TIME)
 
         Intents.intended(hasComponent(MainActivity::class.java.name))
 
-        onView(withText(R.id.fab_add)).perform(click())
-        Intents.intended(hasComponent(UploadActivity::class.java.name))
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
 
-
+        onView(withText(R.string.log_out)).perform(click())
+        Intents.intended(hasComponent(WelcomeActivity::class.java.name))
     }
-
-//    @Test
-//    fun fromMainUntilLogout() {
-//        Thread.sleep(SplashActivity.SPLASH_TIME)
-//
-//        Intents.intended(hasComponent(MainActivity::class.java.name))
-//
-//        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
-//
-//        onView(withText(R.string.log_out)).perform(click())
-//        Intents.intended(hasComponent(WelcomeActivity::class.java.name))
-//    }
 
 }

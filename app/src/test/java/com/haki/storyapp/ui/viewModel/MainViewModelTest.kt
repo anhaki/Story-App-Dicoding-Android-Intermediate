@@ -27,7 +27,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class MainViewModelTest{
+class MainViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
@@ -86,9 +86,11 @@ class StoryPagingSource : PagingSource<Int, LiveData<List<ListStoryItem>>>() {
             return PagingData.from(items)
         }
     }
+
     override fun getRefreshKey(state: PagingState<Int, LiveData<List<ListStoryItem>>>): Int {
         return 0
     }
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<ListStoryItem>>> {
         return LoadResult.Page(emptyList(), 0, 1)
     }

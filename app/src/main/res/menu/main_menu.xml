@@ -5,23 +5,20 @@
         <item
             android:id="@+id/logout_menu"
             android:icon="@drawable/baseline_power_settings_new_24"
-            android:title="@string/log_out"
-            app:showAsAction="never"
             android:onClick="logOut"
-            />
+            android:title="@string/log_out"
+            app:showAsAction="never" />
         <item
             android:id="@+id/language_menu"
             android:icon="@drawable/baseline_translate_24"
-            android:title="@string/language"
-            app:showAsAction="ifRoom"
             android:onClick="language"
-            />
+            android:title="@string/language"
+            app:showAsAction="ifRoom" />
         <item
             android:id="@+id/maps_menu"
             android:icon="@drawable/baseline_share_location_24"
-            android:title="@string/language"
-            app:showAsAction="ifRoom"
             android:onClick="maps"
-            />
+            android:title="@string/language"
+            app:showAsAction="ifRoom" />
     </group>
 </menu>

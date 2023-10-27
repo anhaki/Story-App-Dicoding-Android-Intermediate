@@ -80,7 +80,7 @@ dependencies {
 
     testImplementation("androidx.arch.core:core-testing:2.2.0") // InstantTaskExecutorRule
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3") //TestDispatcher
-    testImplementation("org.mockito:mockito-core:4.4.0")
+    testImplementation("org.mockito:mockito-core:5.6.0")
     testImplementation("org.mockito:mockito-inline:4.4.0")
     androidTestImplementation ("androidx.arch.core:core-testing:2.2.0") //InstantTaskExecutorRule
     androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3") //TestDispatcher

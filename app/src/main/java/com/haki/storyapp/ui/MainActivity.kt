@@ -4,19 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
 import com.haki.storyapp.adapter.LoadingStateAdapter
 import com.haki.storyapp.adapter.StoryAdapter
 import com.haki.storyapp.ui.viewModel.MainViewModel
 import com.haki.storyapp.ui.viewModel.ViewModelFactory
 import com.haki.storyapp.databinding.ActivityMainBinding
-import com.haki.storyapp.repo.ResultState
 
 
 class MainActivity : AppCompatActivity() {
@@ -68,13 +65,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun showSnackBar(msg: String) {
-        Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
-            .setAction(getString(R.string.close)) { }
-            .setActionTextColor(getColor(R.color.secCol))
-            .show()
-    }
-
 
     fun logOut(menuItem: MenuItem) {
         viewModel.logout()
@@ -92,13 +82,4 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun showLoading(isLoad: Boolean) {
-        if (isLoad) {
-            binding.progress.visibility = View.VISIBLE
-            binding.rvStory.visibility = View.INVISIBLE
-        } else {
-            binding.progress.visibility = View.GONE
-            binding.rvStory.visibility = View.VISIBLE
-        }
-    }
 }

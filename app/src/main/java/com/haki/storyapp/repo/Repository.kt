@@ -12,6 +12,7 @@ import com.haki.storyapp.apiService.ApiService
 import com.haki.storyapp.data.StoryRemoteMediator
 import com.haki.storyapp.database.StoryDatabase
 import com.haki.storyapp.di.wrapEspressoIdlingResource
+import com.haki.storyapp.pref.LocModel
 import com.haki.storyapp.pref.UserModel
 import com.haki.storyapp.pref.UserPreference
 import com.haki.storyapp.response.DetailResponse
@@ -35,17 +36,23 @@ class Repository private constructor(
 ) {
     fun login(email: String, password: String) = liveData {
         emit(ResultState.Loading)
-        wrapEspressoIdlingResource{
+        wrapEspressoIdlingResource {
             try {
                 val successResponse = apiService.login(email, password)
                 val userModel =
-                    UserModel(successResponse.loginResult.name, successResponse.loginResult.token, true)
-                saveSession(userModel)
+                    UserModel(
+                        successResponse.loginResult.name,
+                        successResponse.loginResult.token,
+                        true
+                    )
+                saveUserSession(userModel)
                 emit(ResultState.Success(successResponse))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
                 val errorResponse = Gson().fromJson(errorBody, LoginResponse::class.java)
                 emit(ResultState.Error(errorResponse.message))
+            } catch (e: Exception) {
+                emit(ResultState.Error("Unexpected Error"))
             }
         }
     }
@@ -59,18 +66,22 @@ class Repository private constructor(
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, SignUpResponse::class.java)
             emit(ResultState.Error(errorResponse.message))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unexpected Error"))
         }
     }
 
     fun stories() = liveData {
         emit(ResultState.Loading)
         try {
-            val successResponse = apiService.getStories(1, 100, 1)
+            val successResponse = apiService.getStories(1, 50, 1)
             emit(ResultState.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, StoriesResponse::class.java)
             emit(ResultState.Error(errorResponse.message))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unexpected Error"))
         }
     }
 
@@ -82,7 +93,6 @@ class Repository private constructor(
             ),
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
             pagingSourceFactory = {
-//                QuotePagingSource(apiService)
                 storyDatabase.storyDao().getAllStory()
             }
         ).liveData
@@ -97,40 +107,54 @@ class Repository private constructor(
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, DetailResponse::class.java)
             emit(ResultState.Error(errorResponse.message))
+        } catch (e: Exception) {
+            emit(ResultState.Error("Unexpected Error"))
         }
     }
 
-    fun upload(imageFile: File, description: String, latitude: Double?, longitude: Double?) = liveData {
-        emit(ResultState.Loading)
-        val requestBody = description.toRequestBody("text/plain".toMediaType())
-        val lat = latitude?.toFloat()
-        val long = longitude?.toFloat()
-        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-        val multipartBody = MultipartBody.Part.createFormData(
-            "photo",
-            imageFile.name,
-            requestImageFile
-        )
-        try {
-            val successResponse = if (lat == null && long == null){
-                apiService.uploadStr(multipartBody, requestBody)
-            } else {
-                apiService.uploadStr(multipartBody, requestBody, lat, long)
+    fun upload(imageFile: File, description: String, latitude: Double?, longitude: Double?) =
+        liveData {
+            emit(ResultState.Loading)
+            val requestBody = description.toRequestBody("text/plain".toMediaType())
+            val lat = latitude?.toFloat()
+            val long = longitude?.toFloat()
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val multipartBody = MultipartBody.Part.createFormData(
+                "photo",
+                imageFile.name,
+                requestImageFile
+            )
+            try {
+                val successResponse = if (lat == null && long == null) {
+                    apiService.uploadStr(multipartBody, requestBody)
+                } else {
+                    apiService.uploadStr(multipartBody, requestBody, lat, long)
+                }
+                emit(ResultState.Success(successResponse))
+            } catch (e: HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorBody, UploadResponse::class.java)
+                emit(ResultState.Error(errorResponse.message))
+            } catch (e: Exception) {
+                emit(ResultState.Error("Unexpected Error"))
             }
-            emit(ResultState.Success(successResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, UploadResponse::class.java)
-            emit(ResultState.Error(errorResponse.message))
         }
+
+    suspend fun saveLocSession(loc: LocModel) {
+        userPreference.saveLocSession(loc)
     }
 
-    suspend fun saveSession(user: UserModel) {
-        userPreference.saveSession(user)
+    fun getLocSession(): Flow<LocModel> {
+        return userPreference.getLocSession()
     }
 
-    fun getSession(): Flow<UserModel> {
-        return userPreference.getSession()
+
+    suspend fun saveUserSession(user: UserModel) {
+        userPreference.saveUserSession(user)
+    }
+
+    fun getUserSession(): Flow<UserModel> {
+        return userPreference.getUserSession()
     }
 
     suspend fun logout() {

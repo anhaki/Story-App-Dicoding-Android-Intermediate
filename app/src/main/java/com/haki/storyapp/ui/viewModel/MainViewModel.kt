@@ -12,13 +12,11 @@ import com.haki.storyapp.response.ListStoryItem
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
-//    fun stories() = repository.stories()
-
     val story: LiveData<PagingData<ListStoryItem>> =
         repository.getStory().cachedIn(viewModelScope)
 
     fun getSession(): LiveData<UserModel> {
-        return repository.getSession().asLiveData()
+        return repository.getUserSession().asLiveData()
     }
 
     fun logout() {
