@@ -21,10 +21,10 @@ object EspressoIdlingResource {
 }
 
 inline fun <T> wrapEspressoIdlingResource(function: () -> T): T {
-    EspressoIdlingResource.increment() // Set app as busy.
+    EspressoIdlingResource.increment()
     return try {
         function()
     } finally {
-        EspressoIdlingResource.decrement() // Set app as idle.
+        EspressoIdlingResource.decrement()
     }
 }

@@ -38,11 +38,12 @@
     <string name="main_title">Halo, %1$s!</string>
     <string name="upload_title">Unggah Ceritamu</string>
     <string name="language">Bahasa</string>
-    <string name="maps">Peta</string>
     <string name="retry">Coba Lagi</string>
     <string name="title_activity_maps">Cerita di seluruh dunia</string>
     <string name="forDetail">" (Klik untuk detail)"</string>
     <string name="include_currect_location">Sertakan lokasi sekarang</string>
+    <string name="gettingData">Mendapatkan data</string>
+    <string name="successLoc">Lokasi cerita berhasil didapatkan</string>
 
 </resources>
 

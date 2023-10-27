@@ -68,10 +68,6 @@ class UploadActivity : AppCompatActivity() {
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
                     getMyLastLocation()
                 }
-
-                else -> {
-                    // No location access granted.
-                }
             }
         }
 

@@ -5,6 +5,7 @@ import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.haki.storyapp.R
 import com.haki.storyapp.databinding.ActivityMapsBinding
 import com.haki.storyapp.repo.ResultState
@@ -28,6 +30,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapsBinding
     private lateinit var listLoc: List<ListStoryItem>
     private val boundsBuilder = LatLngBounds.Builder()
+    private var theToast: Toast? = null
 
     private val viewModel by viewModels<MapsViewModel> {
         ViewModelFactory.getInstance(this, true)
@@ -39,7 +42,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -73,17 +75,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel.stories().observe(this) { result ->
             if (result != null) {
                 when (result) {
+                    is ResultState.Loading -> {
+                        showToast(getString(R.string.gettingData))
+                    }
+
                     is ResultState.Success -> {
                         listLoc = result.data.listStory
+                        showToast(getString(R.string.successLoc))
                         addMarkers()
                     }
 
                     is ResultState.Error -> {
-
-                    }
-
-                    else -> {
-                        //Do Nothing
+                        showSnackBar(result.error)
                     }
                 }
 
@@ -126,6 +129,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } catch (exception: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", exception)
         }
+    }
+
+    private fun showSnackBar(msg: String) {
+        theToast?.cancel()
+        Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.close)) { }
+            .setActionTextColor(getColor(R.color.secCol))
+            .show()
+    }
+
+    private fun showToast(msg: String) {
+        theToast?.cancel()
+        theToast = Toast.makeText(this, msg, Toast.LENGTH_LONG)
+        theToast?.show()
     }
 
     companion object {

@@ -116,8 +116,6 @@ class Repository private constructor(
         liveData {
             emit(ResultState.Loading)
             val requestBody = description.toRequestBody("text/plain".toMediaType())
-            val lat = latitude?.toFloat()
-            val long = longitude?.toFloat()
             val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
             val multipartBody = MultipartBody.Part.createFormData(
                 "photo",
@@ -125,10 +123,10 @@ class Repository private constructor(
                 requestImageFile
             )
             try {
-                val successResponse = if (lat == null && long == null) {
+                val successResponse = if (latitude == null && longitude == null) {
                     apiService.uploadStr(multipartBody, requestBody)
                 } else {
-                    apiService.uploadStr(multipartBody, requestBody, lat, long)
+                    apiService.uploadStr(multipartBody, requestBody, latitude, longitude)
                 }
                 emit(ResultState.Success(successResponse))
             } catch (e: HttpException) {

@@ -177,12 +177,12 @@
         </Constraint>
         <Constraint
             android:id="@+id/btn_login"
-            motion:layout_constraintEnd_toEndOf="@id/btn_signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintBottom_toTopOf="@id/ind1" />
+            motion:layout_constraintBottom_toTopOf="@id/ind1"
+            motion:layout_constraintEnd_toStartOf="@id/btn_signUp" />
     </ConstraintSet>
     <Transition
         motion:constraintSetStart="@+id/end"
